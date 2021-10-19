@@ -9,7 +9,7 @@ import HomePage from './pages/homepage/homepage.component.jsx';
 import ShopPage from './pages/shop/shop.component.jsx';
 import Header   from './components/Header/header.component.jsx';  
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx';
-import { auth } from './firebase/firebase.utils'; 
+import { auth, createUserProfileDocument } from './firebase/firebase.utils'; 
 
 class App extends React.Component {
 
@@ -24,9 +24,8 @@ class App extends React.Component {
   unsubstribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubstribeFromAuth = auth.onAuthStateChanged( user => {
-      this.setState( { currentUser: user });
-      console.log (user); 
+    this.unsubstribeFromAuth = auth.onAuthStateChanged( async user => {
+      createUserProfileDocument(user); 
     });
   }
 
